@@ -14,11 +14,11 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ImHype/parse-nej-log.git"
+    "url": "git+https://github.com/ImHype/parse-nej-logs.git"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/ImHype/parse-nej-log/issues"
+    "url": "https://github.com/ImHype/parse-nej-logs/issues"
   },
-  "homepage": "https://github.com/ImHype/parse-nej-log#readme"
+  "homepage": "https://github.com/ImHype/parse-nej-logs#readme"
 }
