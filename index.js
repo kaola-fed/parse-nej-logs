@@ -50,13 +50,14 @@ function parser(refs) {
             return warningLines;
         })
         .then(function(warningLines) {
+            warningLines = warningLines.filter(function (warningLine) {
+                var level = getWarningLevel(warningLine);
+                return level >= interruptLevel;
+            });
             if (warningLines.length > 0) {
-                warningLines = warningLines.filter(function (warningLine) {
-                    var level = getWarningLevel(warningLine);
-                    return level >= interruptLevel;
-                });
-                return Promise.reject(warningLines.join('\n'));
+                return;
             }
+            return Promise.reject(warningLines.join('\n'));
         })
 
 }
