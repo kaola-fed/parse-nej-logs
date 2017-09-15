@@ -1,0 +1,24 @@
+{
+  "name": "parse-nej-logs",
+  "version": "1.0.0",
+  "description": "nej warning logs parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "pify": "^3.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImHype/parse-nej-log.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ImHype/parse-nej-log/issues"
+  },
+  "homepage": "https://github.com/ImHype/parse-nej-log#readme"
+}
