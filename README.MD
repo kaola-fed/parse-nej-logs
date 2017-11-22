@@ -4,7 +4,7 @@
 
 ## 安装
 ```
-$ npm i -D parse-nej-logs
+$ npm i -D parse-nej-logs@2.0.0
 ```
 
 ## 启用
@@ -12,7 +12,7 @@ $ npm i -D parse-nej-logs
 ```json
 {
   "dependencies": {
-      "parse-nej-logs": "1.0.0" 
+      "parse-nej-logs": "2.0.0" 
   },
   "scripts": {
     "parseNejLogs": "node ./parse-nej-logs.js",
@@ -29,8 +29,17 @@ const parseNejLogs = require('parse-nej-logs');
 
 parseNejLogs({
     dirname: './',
-    interruptLevel: 99, // 100 - miss js, 99 - miss html, 98 - miss css
-    getWarningLevel: null
+    interrupt: {
+        css: {
+            existed: true
+        },
+        javascript: {
+            existed: true
+        },
+        html: {
+            existed: true
+        }
+    }
 }).catch(e => {
     console.error(e); // 或其他日志输出方式
     process.exit(1); // 中断 npm 构建流程
@@ -38,11 +47,20 @@ parseNejLogs({
 ```
 ## 参数说明
 * dirname - 日志目录，需要输入一个合法的路径
-* interruptLevel - 中断流程的级别(建议 99即可)
-    * 100 - 缺失 `javascript` 文件
-    * 99 - 缺失 `html` 文件
-    * 98 - 缺失 `css` 文件
-* getWarningLevel - 自定义 level 指定方式
+* interrupt - 中断构建的情况
+    ```js
+    {
+        css: {
+            existed: true
+        },
+        javascript: {
+            existed: true
+        },
+        html: {
+            existed: true
+        }
+    }
+    ```
 
 ## License
 
