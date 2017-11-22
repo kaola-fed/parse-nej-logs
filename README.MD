@@ -4,7 +4,7 @@
 
 ## 安装
 ```
-$ npm i -D parse-nej-logs
+$ npm i -D parse-nej-logs@2.0.0
 ```
 
 ## 启用
@@ -12,7 +12,7 @@ $ npm i -D parse-nej-logs
 ```json
 {
   "dependencies": {
-      "parse-nej-logs": "1.0.0" 
+      "parse-nej-logs": "2.0.0" 
   },
   "scripts": {
     "parseNejLogs": "node ./parse-nej-logs.js",
