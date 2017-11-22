@@ -30,8 +30,18 @@ function splitLogLine(content) {
 
 function parser(refs) {
     var dirname = refs.dirname;
-    var getWarningLevel = refs.getWarningLevel || defaultGetWarningLevel;
-    var interruptLevel = refs.interruptLevel;
+    var interrupt = refs.interrupt || {};
+
+    interrupt = Object.assign({
+        css: {
+            exited: true
+        }, javascript: {
+            exited: true
+        }, html: {
+            exited: true
+        }
+    }, interrupt);
+
     return getLogFile(dirname)
         .then(function(logFile) {
             return getContent(logFile)
@@ -43,21 +53,31 @@ function parser(refs) {
         .then(function(refs) {
             var warningLines = refs.warningLines;
             var errorLines = refs.errorLines;
-
             if (errorLines.length > 0) {
                 return Promise.reject(errorLines.join('\n'));
             }
             return warningLines;
         })
         .then(function(warningLines) {
-            warningLines = warningLines.filter(function (warningLine) {
-                var level = getWarningLevel(warningLine);
-                return level >= interruptLevel;
+            warningLines = warningLines.filter(warningLine => {
+                if (interrupt.javascript.existed && isMissedJsFile(warningLine)) {
+                    return true;
+                }
+
+                if (interrupt.html.existed && isMissedHTMLFile(warningLine)) {
+                    return true;
+                }
+            
+                if (interrupt.css.existed && isMissedCssFile(warningLine)) {
+                    return true;
+                }
+
+                return false;
             });
+
             if (warningLines.length > 0) {
-                return;
+                return Promise.reject(warningLines.join('\n'));
             }
-            return Promise.reject(warningLines.join('\n'));
         })
 
 }
@@ -90,21 +110,6 @@ function isCssFile(filename) {
 
 function isHTMLFile(filename) {
     return /\.html/g.test(filename);;
-}
-
-function defaultGetWarningLevel (warningLine) {
-    if (isMissedFile(warningLine)) {
-        switch (true) {
-            case isMissedJsFile(warningLine):
-                return 100;
-            case isMissedHTMLFile(warningLine):
-                return 99;
-            case isMissedCssFile(warningLine):
-                return 98;
-        }
-        return 97;
-    }
-    return 0;
 }
 
 module.exports = parser;
